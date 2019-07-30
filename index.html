@@ -1,79 +1,126 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <title>测试盒模型</title>
-    <style>
-      #ie,
-      #w3c {
-        width: 200px;
-        height: 180px;
-        border: 5px solid #666;
-        margin: 10px;
-        padding: 10px;
-      }
-    </style>
-  </head>
 
-  <body>
-    <p>input1=><input type="text" id="input1" /></p>
-    <p>
-      input2=>
-      <input type="text" id="input2" />
-    </p>
-    <div>
-      我每次比input1的值加1=>
-      <span id="span"></span>
-    </div>
+<head>
+  <meta charset="utf-8" />
+  <title>测试盒模型</title>
+</head>
 
-    <script>
-      var oInput1 = document.getElementById("input1");
-      var oInput2 = document.getElementById("input2");
-      var oSpan = document.getElementById("span");
-      var obj = {};
-      Object.defineProperties(obj, {
-        val1: {
-          configurable: true,
-          get: function() {
-            oInput1.value = 0;
-            oInput2.value = 0;
-            oSpan.innerHTML = 0;
-            return 0;
-          },
-          set: function(newValue) {
-            oInput2.value = newValue;
-            oSpan.innerHTML = Number(newValue) ? Number(newValue) : 0;
-          }
+<body>
+  <p>
+    input1=><input type="text" id="input1">
+  </p>
+  <p>
+    input2=>
+    <input type="text" id="input2">
+  </p>
+  <div>
+    我每次比input1的值加1=>
+    <span id="span"></span>
+  </div>
+  <!-- <p><input type="text" id="input1" /> + <input type="text" id="input2" /> = <span id="span"></span></p> -->
+  <script>
+    var oInput1 = document.getElementById('input1');
+    var oInput2 = document.getElementById('input2');
+    var oSpan = document.getElementById('span');
+    var obj = {};
+    Object.defineProperties(obj, {
+      val1: {
+        configurable: true,
+        get: function () {
+          oInput1.value = 0;
+          oInput2.value = 0;
+          oSpan.innerHTML = 0;
+          return 0
+          // return oInput1.value
         },
-        val2: {
-          configurable: true,
-          get: function() {
-            oInput1.value = 0;
-            oInput2.value = 0;
-            oSpan.innerHTML = 0;
-            return 0;
-          },
-          set: function(newValue) {
-            oInput1.value = newValue;
-            oSpan.innerHTML = Number(newValue) + 1;
-          }
+        set: function (newValue) {
+          oInput2.value = newValue;
+          oSpan.innerHTML = Number(newValue) ? Number(newValue) + 1 : 0
         }
-      });
-      oInput1.value = obj.val1;
-      oInput1.addEventListener(
-        "keyup",
-        function() {
-          obj.val1 = oInput1.value;
+      },
+      val2: {
+        configurable: true,
+        get: function () {
+          oInput1.value = 0;
+          oInput2.value = 0;
+          oSpan.innerHTML = 0;
+          return 0
+          // return oInput2.value
         },
-        false
-      );
-      oInput2.addEventListener(
-        "keyup",
-        function() {
-          obj.val2 = oInput2.value;
-        },
-        false
-      );
-    </script>
-  </body>
+        set: function (newValue) {
+          oInput1.value = newValue;
+          oSpan.innerHTML = Number(newValue) + 1;
+        }
+      }
+    })
+    oInput1.value = obj.val1;
+    oInput1.addEventListener('keyup', function () {
+      obj.val1 = oInput1.value;
+    }, false)
+    oInput2.addEventListener('keyup', function () {
+      obj.val2 = oInput2.value;
+    }, false)
+      // var oInput1 = document.getElementById("input1");
+      // var oInput2 = document.getElementById("input2");
+      // var oSpan = document.getElementById("span");
+      // var obj = {};
+      // Object.defineProperties(obj, {
+      //   val1: {
+      //     configurable: true,
+      //     get: function() {
+      //       // oInput1.value = 0;
+      //       // oInput2.value = 0;
+      //       // oSpan.innerHTML = 0;
+      //       // return 0;
+      //       return oInput1.value
+      //     },
+      //     set: function(newValue) {
+      //       oInput1.value = newValue;
+      //       // oSpan.innerHTML = Number(newValue) ? Number(newValue) : 0;
+      //     }
+      //   },
+      //   val2: {
+      //     configurable: true,
+      //     get: function() {
+      //       // oInput1.value = 0;
+      //       // oInput2.value = 0;
+      //       // oSpan.innerHTML = 0;
+      //       // return 0;
+      //       return oInput2.value
+      //     },
+      //     set: function(newValue) {
+      //       oInput2.value = newValue;
+      //       // oSpan.innerHTML = Number(newValue) + 1;
+      //     }
+      //   }
+      // });
+      // // oInput1.value = obj.val1;
+      // oInput1.addEventListener(
+      //   "keyup",
+      //   function() {
+      //     obj.val1 = oInput1.value;
+      //     if (!isNaN(obj.val1) && !isNaN(obj.val2)) {
+      //       oSpan.innerHTML = Number(obj.val1) + Number(obj.val2)
+      //     } else {
+      //       oSpan.innerHTML = obj.val1 + obj.val2
+      //     }
+      //   },
+      //   false
+      // );
+      // oInput2.addEventListener(
+      //   "keyup",
+      //   function() {
+      //     obj.val2 = oInput2.value;
+      //     if (!isNaN(obj.val1) && !isNaN(obj.val2)) {
+      //       oSpan.innerHTML = Number(obj.val1) + Number(obj.val2)
+      //     } else {
+      //       oSpan.innerHTML = obj.val1 + obj.val2
+      //     }
+      //   },
+      //   false
+      // );
+  </script>
+</body>
+
 </html>
