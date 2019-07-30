@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8"/>
+    <meta charset="utf-8" />
     <title>测试盒模型</title>
     <style>
-      #ie, #w3c {
+      #ie,
+      #w3c {
         width: 200px;
         height: 180px;
         border: 5px solid #666;
@@ -13,17 +14,66 @@
       }
     </style>
   </head>
+
   <body>
-    <!-- ie模型 -->
-    <!--  -->
-    <div id="ie"></div>
-    <!-- w3c标准盒模型 -->
-    <!--  -->
-    <div id="w3c"></div>
-    <div id="parent" style="background-color: #666">
-      <div id="son" style="margin-top: 50px; height: 200px; width:200px; background-color:#12e">我来测试子元素设置margin而父元素不设置的情况下对父元素的影响</div>
+    <p>input1=><input type="text" id="input1" /></p>
+    <p>
+      input2=>
+      <input type="text" id="input2" />
+    </p>
+    <div>
+      我每次比input1的值加1=>
+      <span id="span"></span>
     </div>
+
     <script>
-    </script> 
+      var oInput1 = document.getElementById("input1");
+      var oInput2 = document.getElementById("input2");
+      var oSpan = document.getElementById("span");
+      var obj = {};
+      Object.defineProperties(obj, {
+        val1: {
+          configurable: true,
+          get: function() {
+            oInput1.value = 0;
+            oInput2.value = 0;
+            oSpan.innerHTML = 0;
+            return 0;
+          },
+          set: function(newValue) {
+            oInput2.value = newValue;
+            oSpan.innerHTML = Number(newValue) ? Number(newValue) : 0;
+          }
+        },
+        val2: {
+          configurable: true,
+          get: function() {
+            oInput1.value = 0;
+            oInput2.value = 0;
+            oSpan.innerHTML = 0;
+            return 0;
+          },
+          set: function(newValue) {
+            oInput1.value = newValue;
+            oSpan.innerHTML = Number(newValue) + 1;
+          }
+        }
+      });
+      oInput1.value = obj.val1;
+      oInput1.addEventListener(
+        "keyup",
+        function() {
+          obj.val1 = oInput1.value;
+        },
+        false
+      );
+      oInput2.addEventListener(
+        "keyup",
+        function() {
+          obj.val2 = oInput2.value;
+        },
+        false
+      );
+    </script>
   </body>
 </html>
